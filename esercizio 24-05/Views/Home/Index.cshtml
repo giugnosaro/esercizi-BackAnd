@@ -1,0 +1,122 @@
+﻿@model List<MenuModel>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="~/css/esercizio_24_05.styles.css" asp-append-version="true">
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-left: 10px;
+        }
+
+        #total {
+            font-size: 20px;
+            font-weight: bold;
+        }
+         
+        main {
+            background-color : aqua;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+
+        }
+
+    </style>
+</head>
+<body>
+    <main>
+        <div class="text-center">
+            <h1 class="display-4 text-white">Menu</h1>
+        </div>
+        <ul>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <span class="text-danger">@item.Name</span>
+                    <span class="text-danger">@item.Price $</span>
+                    <input type="checkbox" name="selectedItems" value="@item.Name | @item.Price" />
+                </li>
+            }
+        </ul>
+
+        <div>
+            <span id="total">Total: 0 $</span>
+            <p id></p>
+        </div>
+
+    </main>
+   
+    <script>
+        
+        let selectedItems = [];
+        let commissione = 3; // commissione per ogni acquisto
+      
+        function updateSelectedItems() {
+           
+            const checkboxes = document.querySelectorAll('input[name="selectedItems"]');
+           
+            selectedItems = [];
+            commissione = 3;
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedItems.push(checkbox.value);
+                }
+                else {
+                    selectedItems = selectedItems.filter(item => item !== checkbox.value);
+                }
+                
+
+            });
+          
+            let totalPrice = document.getElementById('total');
+            let total = selectedItems.reduce((acc, item) => {
+              let price = item.split('|')[1];
+              let priceNumber = parseFloat(price.replace(',' , '.'))
+              return acc + priceNumber;
+
+            }, 0);
+            if (selectedItems.length > 0) {
+                total += commissione;
+            }
+
+            totalPrice.textContent = `Total: ${total.toFixed(2)} $`;
+
+            console.log(selectedItems);
+        }
+
+       
+        document.querySelectorAll('input[name="selectedItems"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedItems);
+        });
+
+       
+        function calculateTotal() {
+            let total = selectedItems.reduce((acc, item) => {
+                let price = item.split('|')[1];
+                let priceNumber = parseFloat(price.replace(',', '.'))
+                return acc + priceNumber;
+
+            }, 0);
+
+            total.textContent = `Total: ${total.toFixed(2)} $`;
+
+        }
+    
+    </script>
+   
+</body>
+</html>
