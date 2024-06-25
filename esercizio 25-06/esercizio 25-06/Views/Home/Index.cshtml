@@ -1,0 +1,138 @@
+﻿@model Cv
+
+<style>
+    h1 {
+        color: #007bff;
+        margin-bottom: 50px;
+    }
+
+    table {
+        width: 100%;
+
+    }
+
+    th {
+        text-align: left;
+        padding: 10px;
+    }
+
+    td {
+        padding: 10px;
+    }
+
+    .pe-4 {
+        padding-right: 1rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .container {
+        margin-top: 50px;
+    }
+
+    #fine {
+        margin-left: 50px;
+        border-left : 1px solid #007bff;
+        
+    }
+
+    #meta {
+        border-right : 1px solid #007bff;
+
+    }
+
+
+</style>
+
+<h1 class="display-4 text-center">CV PER ESPERTI</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center">
+                
+                <table>
+                    <tr>
+                        <th>Nome</th>
+                        <td>@Model.InformazioniPersonali.Nome</td>
+                    </tr>
+                    <tr>
+                        <th>Cognome</th>
+                        <td>@Model.InformazioniPersonali.Cognome</td>
+                    </tr>
+                    <tr>
+                        <th>Indirizzo</th>
+                        <td>@Model.InformazioniPersonali.Indirizzo</td>
+                    </tr>
+                    <tr>
+                        <th>Telefono</th>
+                        <td>@Model.InformazioniPersonali.Telefono</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Model.InformazioniPersonali.Email</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        <div class="col-3" id="meta">
+            <table>
+    <tr>
+        <th>Titolo di studio:</th>
+        <td> @Model.Studi.qualifica </td>
+    </tr>
+    <tr>
+        <th>Istituto:</th>
+        <td> @Model.Studi.istituto </td>
+        </tr>
+        <tr>
+            <th>TIPO:</th>
+                    <td> @Model.Studi.tipo </td>
+            </tr>
+            <tr>
+                <th>INIZIO:</th>
+                    <td> @Model.Studi.dataInizio.ToShortDateString() </td>
+                    </tr>
+                    <tr>
+                                                <th>FINE:</th>
+                            <td> @Model.Studi.dataFine.ToShortDateString() </td>
+                            </tr>
+                            <tr>
+                               
+                    </tr>
+
+</table>
+        </div>
+        <div class="col-4" id="fine">
+            <h2>Esperienze Lavorative</h2>
+            <table>
+                
+                    <tr>
+                        <th>Azienda</th>
+                        <th>Job Title</th>
+                        <th>Inizio</th>
+                        <th>Fine</th>
+                        <th>Descrizione</th>
+                        <th>Compiti</th>
+                    </tr>
+               
+               
+                    @foreach (var esperienza in Model.Impieghi.Esperienza)
+                    {
+                        <tr>
+                            <td class="pe-4">@esperienza.azienda</td>
+                            <td class="pe-4">@esperienza.jobTitle</td>
+                            <td class="pe-4">@esperienza.dataInizio.ToShortDateString()</td>
+                            <td class="pe-4">@esperienza.dataFine.ToShortDateString()</td>
+                            <td class="pe-4">@esperienza.descrizione</td>
+                            <td class="pe-4">@esperienza.compiti</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
